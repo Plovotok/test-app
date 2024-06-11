@@ -11,3 +11,7 @@ and paste your github token
 ```kotlin
 const val ACCESS_TOKEN = "" // <--- paste your token here
 ```
+
+## Libraries
+
+Jetpack compose, Coil compose, Ktor, KotlinX serialization, Kotlin Coroutines, Hilt dependency injection, Paging 3 
