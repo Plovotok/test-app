@@ -2,7 +2,6 @@ package ru.plovotok.githubtest.ui.kit
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,15 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import io.ktor.client.plugins.ServerResponseException
+import ru.plovotok.domain.NetworkException
 import ru.plovotok.githubtest.ui.theme.Typography
-import java.net.UnknownHostException
 
 @Composable
 fun ErrorBox(cause: Throwable, onRetry: () -> Unit) {
     val message = when {
-        cause is ServerResponseException -> cause.response.status.description
-        cause is UnknownHostException -> "Please, check your internet connection"
+        cause is NetworkException -> cause.message
         else -> "Something went wrong"
     }
 
@@ -38,6 +35,4 @@ fun ErrorBox(cause: Throwable, onRetry: () -> Unit) {
             Text(text = "Try again", style = Typography.bodyMedium)
         }
     }
-
-
 }

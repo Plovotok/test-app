@@ -17,6 +17,7 @@ import io.ktor.http.path
 import io.ktor.util.StringValues
 import io.ktor.utils.io.errors.IOException
 import kotlinx.serialization.SerializationException
+import ru.plovotok.domain.NetworkException
 import java.net.UnknownHostException
 
 /**
@@ -54,7 +55,19 @@ internal suspend inline fun <reified T> HttpClient.safeRequest(
             if (body != null) setBody(body)
         }
         ApiResponse.Success(data = response.body<T>())
+    } catch (e: ServerResponseException) {
+        e.printStackTrace()
+        ApiResponse.Error(NetworkException.ServerResponseException(e.message))
+    } catch (e: SerializationException) {
+        e.printStackTrace()
+        ApiResponse.Error(NetworkException.UnexpectedException)
+    } catch (e: UnknownHostException) {
+        e.printStackTrace()
+        ApiResponse.Error(NetworkException.NoNetworkConnectionException)
+    } catch (e: IOException) {
+        e.printStackTrace()
+        ApiResponse.Error(NetworkException.UnexpectedException)
     } catch (e: Exception) {
         e.printStackTrace()
-        ApiResponse.Error(e)
+        ApiResponse.Error(NetworkException.UnexpectedException)
     }

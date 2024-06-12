@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.hilt)
     alias(libs.plugins.serialization)
     id("kotlin-kapt")
 }
@@ -31,10 +30,9 @@ dependencies {
     implementation(libs.androidx.appcompat)
 
     implementation(libs.hilt)
-    implementation(libs.hilt.viewmodel)
     kapt(libs.hilt.compiler)
 
-    api(libs.ktor.client.core)
+    implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.json)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.contentNegotiation)

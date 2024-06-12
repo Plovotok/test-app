@@ -15,8 +15,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import ru.plovotok.data.SearchRepositoriesUseCase
-import ru.plovotok.domain.repository.SearchRepository
+import ru.plovotok.domain.SearchRepositoriesUseCase
 import ru.plovotok.githubtest.util.BaseViewModel
 import ru.plovotok.githubtest.util.GHRepositoriesSource
 import ru.plovotok.githubtest.util.UiEffect
@@ -57,7 +56,7 @@ class SearchViewModel @Inject constructor(
         when (event) {
             is SearchEvent.NavigateToProfile -> sendEffect(SearchEffect.GoToProfile(event.username))
             is SearchEvent.SearchRepositories -> search()
-            is SearchEvent.UpdateSearchField -> _textSearch.value = event.newText
+            is SearchEvent.UpdateSearchField -> updateTextField(event.newText)
         }
     }
 
@@ -65,6 +64,10 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             _search.emit(textSearch.value)
         }
+    }
+
+    private fun updateTextField(newText: String) {
+        _textSearch.value = newText
     }
 }
 

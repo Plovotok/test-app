@@ -25,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ru.plovotok.githubtest.ProfileEffect
 import ru.plovotok.githubtest.ProfileEvent
 import ru.plovotok.githubtest.ProfileViewModel
 import ru.plovotok.githubtest.ui.kit.ErrorBox
@@ -41,6 +42,15 @@ fun ProfileScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     val lifecycleOwner = LocalLifecycleOwner.current
+
+    val effect by viewModel.effect.collectAsStateWithLifecycle(initialValue = null)
+
+    LaunchedEffect(effect) {
+        when (effect) {
+            is ProfileEffect.GoBack -> onBack()
+            null -> {}
+        }
+    }
 
     LaunchedEffect(lifecycleOwner) {
         when (lifecycleOwner.lifecycle.currentState) {
@@ -60,7 +70,7 @@ fun ProfileScreen(
                     Text(text = "Profile Info", style = Typography.titleMedium)
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = { viewModel.sendEvent(ProfileEvent.NavigateBack) }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null
@@ -99,6 +109,5 @@ fun ProfileScreen(
                 UserInfo(user = it)
             }
         }
-
     }
 }

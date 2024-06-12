@@ -1,9 +1,8 @@
 package ru.plovotok.githubtest.util
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import ru.plovotok.data.SearchRepositoriesUseCase
+import ru.plovotok.domain.SearchRepositoriesUseCase
 import ru.plovotok.domain.models.GHRepository
 
 class GHRepositoriesSource (

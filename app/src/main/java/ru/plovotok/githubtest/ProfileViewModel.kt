@@ -25,6 +25,7 @@ class ProfileViewModel @Inject constructor(
     override fun handleEvent(event: ProfileEvent) {
         when (event) {
             is ProfileEvent.LoadUserData -> getUserProfile(event.username)
+            ProfileEvent.NavigateBack -> sendEffect(ProfileEffect.GoBack)
         }
     }
 
@@ -57,13 +58,13 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
-
 }
 
 sealed interface ProfileEvent : UiEvent {
     data class LoadUserData(val username: String) : ProfileEvent
+    data object NavigateBack: ProfileEvent
 }
 
 sealed interface ProfileEffect : UiEffect {
-
+    data object GoBack: ProfileEffect
 }

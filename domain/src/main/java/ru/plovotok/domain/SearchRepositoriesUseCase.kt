@@ -1,4 +1,4 @@
-package ru.plovotok.data
+package ru.plovotok.domain
 
 import ru.plovotok.domain.repository.SearchRepository
 import javax.inject.Inject
